@@ -24,6 +24,19 @@ On a supported Jira backlog/board page, estimate badges are shown in hours after
 
 The tooltip includes a hint about what the next click will do.
 
+## Restrict the script to your Jira site
+
+The userscript includes a broad `@match` by default. You can override it through Tampermonkey without editing the userscript source:
+
+1. Open the Tampermonkey **Dashboard** from the extension popup.
+2. In the installed scripts list, click the **Jira Hours / Days Toggle** script name to open its details. The **Settings** tab is inside this details view; it is not in the extension popup.
+3. Open **Settings**, then find the **Includes/Excludes** section.
+4. Disable **Original Matches** so the broad `*://*/*` rule no longer applies.
+5. In **User Matches**, click **Add...** and enter your Jira URL, for example `https://jira.example.com/*`.
+6. Confirm the rule and refresh Jira.
+
+Use your Jira hostname in place of `jira.example.com`. For both HTTP and HTTPS, use `*://jira.example.com/*`.
+
 ## Conversion
 
 The script uses standard Jira work-time assumptions:
@@ -37,10 +50,4 @@ Slash-separated values are converted on each side independently. For example, `8
 
 ## Site permissions
 
-The userscript currently uses `@match *://*/*`, so Tampermonkey loads it on all sites. It only changes a page when it finds the matching Jira elements, and it makes no network requests. For a narrower scope, edit the `@match` line in `jira-hours-days-toggle.user.js` to match your Jira host, for example:
-
-```text
-// @match        https://jira.example.com/*
-```
-
-Replace `jira.example.com` with your Jira hostname.
+Tampermonkey's **User Matches** setting controls where the script is injected. The userscript itself makes no network requests.
